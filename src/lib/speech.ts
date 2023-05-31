@@ -23,6 +23,7 @@ export type SpeechEngine = ReturnType<typeof createSpeechEngine>;
  * that the candidate might not be familiar with.
  */
 const createSpeechEngine = (options: SpeechEngineOptions) => {
+
   const state: SpeechEngineState = {
     utterance: null,
     config: {
