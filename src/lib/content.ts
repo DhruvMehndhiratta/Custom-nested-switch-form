@@ -3,7 +3,7 @@ const API_URL = "http://localhost:3000/content";
 /**
  * Fetch the content from the api
  */
-const fetchContent = async () => {
+const fetchContent = async (): Promise<string> => {
   return new Promise((resolve, reject) => {
     fetch(API_URL)
       .then((res) => res.json())
@@ -20,15 +20,13 @@ const parseContentIntoSentences = (content: string): string[] => {
   const parser = new DOMParser();
   let output = [] as string[];
   const node = parser.parseFromString(content, "text/xml");
-  function recursiveHelper(element: any){
-    for(let i = 0; i < element.childNodes.length; i++){
-      if(element.childNodes[i].tagName !== "s")
-        {
-          recursiveHelper(element.childNodes[i])
-        }else {
-          // its starts with another tag
-          output = [...output, element.childNodes[i].textContent ]
-        }
+  function recursiveHelper(element: any) {
+    for (let i = 0; i < element.childNodes.length; i++) {
+      if (element.childNodes[i].tagName !== "s") {
+        recursiveHelper(element.childNodes[i]);
+      } else {
+        output = [...output, element.childNodes[i].textContent];
+      }
     }
   }
   recursiveHelper(node);

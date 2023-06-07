@@ -48,7 +48,6 @@ const createSpeechEngine = (options: SpeechEngineOptions) => {
       options.onStateUpdate("ended");
       options.onEnd(e);
     };
-
     // set it up as active utterance
     state.utterance = utterance;
   };

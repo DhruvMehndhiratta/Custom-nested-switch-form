@@ -1,24 +1,24 @@
 import { ReactNode } from "react";
 // Implement a component that displays the currently read word and sentence
 interface CurrentlyReadingProps {
-  currentSentence: string;
-  currentWord: string;
+  sentences: string[];
+  currentWordIndex: number;
+  currentSentenceIndex: number
 }
 export const CurrentlyReading = ({
-  currentSentence = "",
-  currentWord = "",
+  currentSentenceIndex,
+  currentWordIndex = 0,
+  sentences
 }: CurrentlyReadingProps) => {
-  const words = currentSentence.split(" ") as string[];
-  const findWordIndex = words.findIndex(
-    (item) => item === currentWord
-  ) as number;
+  const words = sentences?.length &&  sentences[currentSentenceIndex].split(" ") || [] as string[];
+
   return (
     <div className="currently-reading">
       <div>
         {words.map((item: string, index): any => {
-          const isHighlighted = index === findWordIndex;
+          const isHighlighted = index === currentWordIndex;
           return (
-            <span className={isHighlighted ? "highlight" : ""} key={item}>
+            <span className={isHighlighted ? "highlight" : ""} key={item + index}>
               {item + " "}
             </span>
           );

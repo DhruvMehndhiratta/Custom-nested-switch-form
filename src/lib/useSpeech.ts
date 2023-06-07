@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import { createSpeechEngine } from './speech';
+import { useState, useEffect } from "react";
+import { createSpeechEngine } from "./speech";
 
 const useSpeech = (sentences: Array<string>) => {
   /*
@@ -10,48 +10,58 @@ const useSpeech = (sentences: Array<string>) => {
   the currently read word and sentence
   */
 
-  const [currentSentence, setCurrentSentence] = useState<string>('');
-  const [currentWord, setCurrentWord] = useState<string>('');
-  let currentSentenceIndex = 0;
+  const [currentWordIndex, setCurrentWordIndex] = useState<number>(0);
+  const [currentSentenceIndex, setCurrentSentenceIndex] = useState<number>(0);
 
   const onStateUpdate = (status: string): void => {
-    if(status === "ended" &&  currentSentenceIndex + 1 < sentences.length){
-      currentSentenceIndex = currentSentenceIndex + 1;
-      setCurrentSentence(sentences[currentSentenceIndex]);
-      const selectedWord = sentences[currentSentenceIndex].split(' ')[0]
-      setCurrentWord(selectedWord);
+    // console.log(status, "status >>>") // playing | paused | ended
+  };
 
-      load(sentences[currentSentenceIndex]);
-      play();
+  const onEnd = (): void => {
+    if(currentSentenceIndex < sentences.length - 1){
+      setCurrentWordIndex(0);
+      setCurrentSentenceIndex((prevState) => prevState + 1);
     }
-  }
+  };
+
+  const onBoundary = (): void => {
+    // console.log("on boundary", isPaused)
+    // if (!isPaused) {
+      setCurrentWordIndex((prevState) => prevState + 1);
+    // }
+  };
 
   let { state, play, pause, cancel, load } = createSpeechEngine({
-    onBoundary: (e: SpeechSynthesisEvent):SpeechSynthesisEvent => e,
-    onEnd: (e: SpeechSynthesisEvent):SpeechSynthesisEvent => e,
-    onStateUpdate
+    onBoundary,
+    onEnd,
+    onStateUpdate,
   });
 
   useEffect(() => {
-    if(sentences.length){
-      setCurrentSentence(sentences[currentSentenceIndex]);
-      const selectedWord = sentences[currentSentenceIndex].split(' ')[0];
-      setCurrentWord(selectedWord);
+    if (sentences.length) {
       load(sentences[currentSentenceIndex]);
+      play();
     }
-  }, [sentences]);
+  }, [sentences.length]);
+
+  useEffect(() => {
+    load(sentences[currentSentenceIndex]);
+    play();
+  }, [currentSentenceIndex])
 
   return {
-    currentWord,
-    currentSentence,
+    currentWordIndex,
     controls: {
       state,
       play,
       pause,
       cancel,
-      load
-    }
-  }
+      load,
+    },
+    currentSentenceIndex,
+    setCurrentSentenceIndex,
+    setCurrentWordIndex
+  };
 };
 
 export { useSpeech };

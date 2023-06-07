@@ -7,30 +7,46 @@ import { useSpeech } from "./lib/useSpeech";
 
 function App() {
   const [sentences, setSentences] = useState<Array<string>>([]);
-  const { currentWord, currentSentence, controls } = useSpeech(sentences);
-  useEffect(() => {
+  const {
+    currentWordIndex,
+    controls,
+    currentSentenceIndex,
+    setCurrentSentenceIndex,
+    setCurrentWordIndex
+  } = useSpeech(sentences);
+
+  const fetchStatements = (): void => {
     fetchContent().then((res) => {
       const response = res as string;
       const output = parseContentIntoSentences(response) as string[];
       setSentences(output);
     });
+  };
+  useEffect(() => {
+    fetchStatements();
   }, []);
 
   return (
     <div className="App">
       <div>
         <CurrentlyReading
-          currentSentence={currentSentence}
-          currentWord={currentWord}
+           currentSentenceIndex={currentSentenceIndex}
+          sentences={sentences}
+          currentWordIndex={currentWordIndex}
         />
       </div>
       <div>{sentences.join(" ")}</div>
       <div>
         <Controls
-          currentSentence={currentSentence}
-          onLoad={controls.load}
+          onResume={controls.load}
+          onLoad={fetchStatements}
           onPause={controls.pause}
           onPlay={controls.play}
+          currentSentenceIndex={currentSentenceIndex}
+          currentWordIndex={currentWordIndex}
+          sentences={sentences}
+          setCurrentSentenceIndex={setCurrentSentenceIndex}
+          setCurrentWordIndex={setCurrentWordIndex}
         />
       </div>
     </div>
