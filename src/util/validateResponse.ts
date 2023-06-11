@@ -43,8 +43,3 @@ export const validateResponse = (currentQuestion: QuestionnaireProps) => {
     error,
   };
 };
-
-export const checkFieldStatus  = (questions: QuestionnaireProps[]): boolean => {
-  // console.log(questions, "questions>>>");
-
-}

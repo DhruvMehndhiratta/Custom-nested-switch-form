@@ -2,7 +2,6 @@ import { FC, ReactNode } from "react";
 import { AccordianContent, AccordianContainer } from "./Accordian.styled";
 import { QuestionnaireProps } from "../../types";
 
-
 interface AccordianProps {
   isExpanded: boolean;
   content: ReactNode | string;
@@ -22,22 +21,24 @@ const Accordian: FC<AccordianProps> = ({
   currentQuestionIndex,
   toggleAccordianCollapseState,
   checkIfItemEnabled,
-  questions
+  questions,
 }) => {
   const record = questions[currentQuestionIndex] as QuestionnaireProps;
 
+  /* checkIfFieldIsEnabled identifies if the next accordian
+   is allowed to expand or not based on the previous filled information  */
   const checkIfFieldIsEnabled = () => {
-    if(Array.isArray(record.enabled)){
+    if (Array.isArray(record.enabled)) {
       return checkIfItemEnabled(currentQuestionIndex);
     }
-    if(record.enabled) return true;
-  }
+    if (record.enabled) return true;
+  };
 
   const toggleAccordion = (): void => {
     if (isAnswerGiven && checkIfFieldIsEnabled()) {
       toggleAccordianCollapseState(currentQuestionIndex);
     }
-  }
+  };
 
   return (
     <AccordianContainer>

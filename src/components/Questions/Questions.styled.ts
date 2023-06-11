@@ -51,3 +51,7 @@ export const CancelButton = styled("button")`
   font-size: 15px;
   cursor: pointer;
 `;
+
+export const InputContainer = styled('div')`
+  margin-top: 20px;
+`;

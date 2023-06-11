@@ -10,9 +10,8 @@ import {
   AnswerSection,
   ActionButtonContainer,
   SubmitButton,
-  CancelButton,
+  InputContainer
 } from "./Questions.styled";
-import { checkFieldStatus } from '../../util/validateResponse';
 
 export interface CommonEventsHandlerProps {
   onChange: (
@@ -28,7 +27,7 @@ interface QuestionaireProps extends CommonEventsHandlerProps {
   questions: QuestionnaireProps[];
   toggleAccordianCollapseState: (id: number) => void;
   reloadQuestions: () => void;
-  checkIfItemEnabled: () => void;
+  checkIfItemEnabled: (id: number) => void;
 }
 
 const Questions: FC<QuestionaireProps> = ({
@@ -49,7 +48,7 @@ const Questions: FC<QuestionaireProps> = ({
     return (
       <div>
         <span>{item.description}</span>
-        <div style={{ marginTop: "20px" }}>
+        <InputContainer>
           <Input
             item={item}
             onChange={onChange}
@@ -58,7 +57,7 @@ const Questions: FC<QuestionaireProps> = ({
             onSubmitQuestion={onSubmitQuestion}
             onEditQuestion={onEditQuestion}
           />
-        </div>
+        </InputContainer>
       </div>
     );
   };
@@ -94,8 +93,7 @@ const Questions: FC<QuestionaireProps> = ({
         />
       ))}
       <ActionButtonContainer marginTop={60}>
-        <SubmitButton onClick={() => checkFieldStatus(questions)}>Submit Record</SubmitButton>
-        <CancelButton onClick={reloadQuestions}>Reset</CancelButton>
+        <SubmitButton onClick={reloadQuestions}>Reset</SubmitButton>
       </ActionButtonContainer>
     </Container>
   );
