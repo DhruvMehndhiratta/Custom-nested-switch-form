@@ -1,28 +1,107 @@
 module.exports = [
   {
-    content: "<speak><s>This is a sentence.</s></speak>",
+    id: "QUESTION_1",
+    title: "What is your name?",
+    description: "a paragraph of random text...!",
+    type: "TEXT",
+    options: [],
+    value: null,
+    enabled: true,
+    validations: [
+      {
+        type: "min",
+        message: "Your name must not be shorter than 3 characters.",
+      },
+      {
+        type: "max",
+        message: "Your name must not be longer than 25 characters.",
+      },
+    ],
   },
   {
-    content:
-      "<speak><s>This is a sentence.</s><s>This is another sentence</s></speak>",
+    id: "QUESTION_2",
+    title: "What is your gender?",
+    description: "a paragraph of random text...!",
+    type: "RADIO",
+    options: [
+      { key: "FEMALE", text: "Female" },
+      { key: "MALE", text: "Male" },
+      { key: "OTHER", text: "Other" },
+    ],
+    value: null,
+    enabled: true,
+    validations: [],
   },
   {
-    content:
-      "<speak><s>This is a sentence.</s><s>This is another sentence</s>Some more text</speak>",
+    id: "QUESTION_3",
+    title: "What is your the date of your birth?",
+    description: "a paragraph of random text...!",
+    type: "DATE",
+    options: [],
+    value: null,
+    enabled: [{ "QUESTION_2": "OTHER" }],
+    validations: [],
   },
   {
-    content:
-      "<speak><s>This is a sentence.</s><s>This is another sentence</s><s>Some more text</s><s>This is a longer piece of content</s></speak>",
+    id: "QUESTION_4",
+    title: "What insurances do you have?",
+    description: "a paragraph of random text...!",
+    type: "CHECKBOX",
+    options: [
+      { key: "HEALTH", text: "Health" },
+      { key: "LIABILITY", text: "Liability" },
+      { key: "LEGAL", text: "Legal" },
+      { key: "CAR", text: "Car" },
+    ],
+    value: null,
+    enabled: true,
+    validations: [],
   },
   {
-    content:
-      "<speak><s>This is a sentence.</s><s>This is another sentence</s>Some more text<s>This is a longer piece of content</s></speak>",
+    id: "QUESTION_5",
+    title: "What is your employment status?",
+    description: "a paragraph of random text...!",
+    type: "SELECT",
+    options: [
+      { key: "EMPLOYEE", text: "Employee" },
+      { key: "BUSINESS_OWNER", text: "Business Owner" },
+      { key: "HOUSE_SPOUSE", text: "Housewife / Househusband" },
+      { key: "RETIREE", text: "Retiree" },
+      { key: "STUDENT", text: "Student" },
+      { key: "SELF_EMPLOYED", text: "Self-Employed" },
+      { key: "UNEMPLOYED", text: "Unemployed" },
+    ],
+    value: null,
+    enabled: true,
+    validations: [],
   },
   {
-    content:
-      "<speak><s>This is a sentence.</s><s>This is another sentence</s>Some more text<s>This is a longer piece of content</s></speak>",
-  },
-  {
-    content: `<speak><p><s>Nulla facilisi</s><s>Aenean sed nisl quis nisl euismod commodo</s><s>Vestibulum nec varius sapien, eget tristique lectus</s><s>Curabitur et nulla lectus</s><s>Aenean ut viverra mauris, ut ullamcorper elit</s><s>Ut at dapibus risus, ut imperdiet mi</s><s>Suspendisse potenti</s><s>Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos</s><s>Sed id nibh lacinia, vulputate lacus eu, lobortis nisi</s><s>Phasellus porttitor semper nunc</s><s>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas</s><s>Phasellus et odio nec dolor convallis malesuada nec a ante</s><s>Mauris arcu diam, vehicula quis tempus eu, feugiat in augue</s><s>Mauris rutrum fermentum ex non cursus.</s></p><speak>`,
+    id: "QUESTION_6",
+    title: "What is your phone number?",
+    description: "a paragraph of random text...!",
+    type: "NUMBER",
+    options: [],
+    value: null,
+    enabled: [
+      {
+        QUESTION_5: "EMPLOYEE",
+      },
+      {
+        QUESTION_5: "BUSINESS_OWNER",
+      },
+      {
+        QUESTION_5: "STUDENT",
+      },
+    ],
+    validations: [
+      {
+        type: "min",
+        message: "Your number must be only digits and not shorter than 7.",
+      },
+      {
+        type: "max",
+        message: "Your number must be only digits and not longer than 12.",
+      },
+    ],
   },
 ];

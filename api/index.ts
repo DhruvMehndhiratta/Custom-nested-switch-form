@@ -9,17 +9,12 @@ const port = 3000;
 
 app.use(cors())
 
-
-const getRandomElement = <T>(arr: Array<T>): T =>
-  arr[(Math.random() * arr.length) | 0];
-
 app.get("/ping", (req: Request, res: Response) => {
   res.send("pong");
 });
 
-app.get("/content", (req: Request, res: Response) => {
-  const content = getRandomElement(data);
-  res.json(content);
+app.get("/fetch-questionnaire", (req: Request, res: Response) => {
+  res.json(data);
 });
 
 app.listen(port, () => {
