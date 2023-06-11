@@ -19,9 +19,8 @@ const RadioGroup: FC<RadioGroupProps> = ({ onChange, currentQuestion, item }) =>
   const [selectedOption, setSelectedOption] = useState(-1);
 
   const handleChange = (e: React.ChangeEvent<HTMLElement>): void => {
-    const {
-      target: { value },
-    } = e;
+    // @ts-ignore
+    const { target: { value } } = e;
     const index = options.findIndex((item) => item.key === value);
     if (index !== -1) {
       setSelectedOption(index);

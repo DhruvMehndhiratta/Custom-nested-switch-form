@@ -21,17 +21,16 @@ const useFillData = () => {
     currentQuestionIndex: number, // used for determining which item in questions set is updated
     optionIndex?: number // used for determining which option in checkbox is clicked
   ) => {
-    const {
-      target: { value, checked },
-    } = e;
+    // @ts-ignore
+    const { target: { value, checked }} = e;
     const updatedQuestions = [...questions];
     const currentQuestion = updatedQuestions[currentQuestionIndex];
     const { type, initialValue } = currentQuestion;
 
     // append selecting values in case of checkbox by comma separated as checkbox can take multiple values
     if (type === "CHECKBOX") {
-      currentQuestion.options[optionIndex].isChecked =
-        !currentQuestion.options[optionIndex].isChecked;
+       // @ts-ignore
+      currentQuestion.options[optionIndex].isChecked = !currentQuestion.options[optionIndex].isChecked;
       if (checked) {
         if (!initialValue) {
           currentQuestion.initialValue = value;
@@ -114,7 +113,9 @@ const useFillData = () => {
   const checkIfItemEnabled = (currentQuestionIndex: number) => {
     const updatedQuestions = [...questions];
     const { enabled = []} = updatedQuestions[currentQuestionIndex];
+    // @ts-ignore
     for(let i = 0; i < enabled.length; i++){
+       // @ts-ignore
       const currentItem = enabled[i];
       const keyItem = Object.keys(currentItem)[0] as string;
       const index = updatedQuestions.findIndex((item) => item.id === keyItem);

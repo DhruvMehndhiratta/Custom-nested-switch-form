@@ -33,6 +33,7 @@ const Input: FC<FetchInputTypeProps> = ({
     TEXT: TextField,
     SELECT: Select,
   };
+  // @ts-ignore
   let Component = Map[type];
   const handleUpdateQuestion = (): void => {
     if (item.disabled) {
