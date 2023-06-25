@@ -5,7 +5,7 @@ const API_URL = "http://localhost:3000/fetch-questionnaire";
 /**
  * Fetch the content from the api
  */
-const fetchContent = async (): Promise<QuestionnaireProps[]> => {
+const fetchSchema = async (): Promise<QuestionnaireProps[]> => {
   return new Promise((resolve, reject) => {
     fetch(API_URL)
       .then((res) => res.json())
@@ -15,4 +15,4 @@ const fetchContent = async (): Promise<QuestionnaireProps[]> => {
 };
 
 
-export { fetchContent };
+export { fetchSchema };

@@ -1,6 +1,7 @@
 import { FC, useState } from "react";
 import Radio from "./Radio";
 import { QuestionnaireProps } from '../../../types';
+import { RadioContainer } from './RadioGroup.styled';
 
 interface OptionProps {
   key: string;
@@ -10,13 +11,11 @@ interface OptionProps {
 interface RadioGroupProps {
   item: QuestionnaireProps;
   options: OptionProps[];
-  onChange: (e: React.ChangeEvent<HTMLElement>, currentQuestion: number) => void;
-  currentQuestion: number;
 }
 
-const RadioGroup: FC<RadioGroupProps> = ({ onChange, currentQuestion, item }) => {
-  const { options = [], disabled } = item;
-  const [selectedOption, setSelectedOption] = useState(-1);
+const RadioGroup: FC<RadioGroupProps> = ({ item }) => {
+  const { options = [] } = item;
+  const [selectedOption, setSelectedOption] = useState(options.findIndex((resp) => resp.key === item.value));
 
   const handleChange = (e: React.ChangeEvent<HTMLElement>): void => {
     // @ts-ignore
@@ -25,21 +24,20 @@ const RadioGroup: FC<RadioGroupProps> = ({ onChange, currentQuestion, item }) =>
     if (index !== -1) {
       setSelectedOption(index);
     }
-    onChange(e, currentQuestion);
   };
 
   return (
-    <div>
+    <RadioContainer>
       {options.map((item, index) => (
         <Radio
-          disabled={disabled}
+          // disabled={disabled}
           key={item.key}
           item={item}
           handleChange={handleChange}
           isActive={index === selectedOption}
         />
       ))}
-    </div>
+    </RadioContainer>
   );
 };
 

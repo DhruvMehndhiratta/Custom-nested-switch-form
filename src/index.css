@@ -1,4 +1,25 @@
+@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+
 * {
   margin: 0;
   padding: 0;
+}
+
+.container-app {
+  margin: 0 20px 0 auto;
+  width: 20%;
+
+}
+
+.form-group {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+label{
+  margin-left: 4px;
+}
+
+.form-group label {
+  margin-bottom: 4px;
 }

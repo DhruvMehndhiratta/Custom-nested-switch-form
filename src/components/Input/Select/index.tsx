@@ -7,24 +7,20 @@ interface OptionProps {
 }
 
 interface SelectProps {
-  onChange: (
-    e: React.ChangeEvent<HTMLElement>,
-    currentQuestion: number
-  ) => void;
   item: QuestionnaireProps;
-  currentQuestion: number;
 }
 
-const Select: FC<SelectProps> = ({ onChange, item, currentQuestion }) => {
-  const { options = [], initialValue } = item;
+const Select: FC<SelectProps> = ({ item, register }) => {
+  const { options = [], initialValue, title, id } = item;
   return (
-    <div>
+    <div className="form-group">
+      {title && <label>{title}</label>}
       <select
+        className="w-100"
         value={initialValue}
-        onChange={(e) => onChange(e, currentQuestion)}
-        disabled={item.disabled}
+        {...register?.(id,{ required: true})}
       >
-        <option value="">Select</option>
+        <option value="" >Select</option>
         {options.map((item) => (
           <option value={item.key} key={item.key}>
             {item.text}

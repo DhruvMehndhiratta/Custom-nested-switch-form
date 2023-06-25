@@ -1,30 +1,42 @@
-import Questions from "./components/Questions";
-import useFillData from "./hooks/useFillData";
+import React, { useEffect, useState } from "react";
+import Input from "./components/Input";
+import { useForm } from "react-hook-form";
+import { fetchSchema } from "./lib/fetchSchema";
 
-function App() {
+const App = () => {
+  const [fields, setFields] = useState([]);
   const {
-    questions,
-    onChange,
-    onCancelQuestion,
-    onSubmitQuestion,
-    onEditQuestion,
-    toggleAccordianCollapseState,
-    reloadQuestions,
-    checkIfItemEnabled
-  } = useFillData();
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  const currentFieldValues = watch();
+  useEffect(() => {
+    fetchSchema().then((res) => {
+      setFields(res);
+    });
+  }, []);
 
   return (
-    <Questions
-      questions={questions}
-      onChange={onChange}
-      onCancelQuestion={onCancelQuestion}
-      onEditQuestion={onEditQuestion}
-      toggleAccordianCollapseState={toggleAccordianCollapseState}
-      onSubmitQuestion={onSubmitQuestion}
-      reloadQuestions={reloadQuestions}
-      checkIfItemEnabled={checkIfItemEnabled}
-    />
+    <form>
+      <div className="container-app">
+        {fields.map((item) => (
+          <div className="mb-3" key={item.id}>
+            <Input
+              item={item}
+              register={register}
+              currentFieldValues={currentFieldValues}
+            />
+          </div>
+        ))}
+        <button type="button" className="btn btn-primary">
+          Submit
+        </button>
+      </div>
+    </form>
   );
-}
+};
 
 export default App;

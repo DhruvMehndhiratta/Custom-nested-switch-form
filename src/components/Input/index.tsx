@@ -1,62 +1,43 @@
 import { FC } from "react";
-import { CommonEventsHandlerProps } from '../Questions'
 import { QuestionnaireProps } from "../../types";
-import CheckboxGroup from "../Input/CheckboxGroup";
 import RadioGroup from "../Input/RadioGroup";
 import TextField from "../Input/TextField";
 import Select from "../Input/Select";
-import {
-  ActionButtonContainer,
-  SubmitButton,
-  CancelButton,
-} from "../Questions/Questions.styled";
+import Heading from "../Heading";
+import SubHeading from "../SubHeading";
+import TabGroup from "../TabGroup";
 
-interface FetchInputTypeProps extends CommonEventsHandlerProps {
+interface FetchInputTypeProps {
   item: QuestionnaireProps;
-  currentQuestion: number;
 }
 
 const Input: FC<FetchInputTypeProps> = ({
   item,
-  onChange,
-  currentQuestion,
-  onCancelQuestion,
-  onEditQuestion,
-  onSubmitQuestion,
+  register,
+  currentFieldValues
 }) => {
   const { type } = item;
   const Map = {
-    CHECKBOX: CheckboxGroup,
     RADIO: RadioGroup,
     NUMBER: TextField,
     DATE: TextField,
-    TEXT: TextField,
+    TEXTFIELD: TextField,
     SELECT: Select,
+    HEADING: Heading,
+    SUBHEADING: SubHeading,
+    TAB_GROUP: TabGroup
   };
   // @ts-ignore
   let Component = Map[type];
-  const handleUpdateQuestion = (): void => {
-    if (item.disabled) {
-      onEditQuestion(currentQuestion);
-    } else {
-      onSubmitQuestion(currentQuestion);
-    }
-  };
+
   return (
     <>
       <Component
-        currentQuestion={currentQuestion}
-        onChange={onChange}
+        register={register}
+        key={item.id}
         item={item}
+        currentFieldValues={currentFieldValues}
       />
-      <ActionButtonContainer marginTop={20}>
-        <SubmitButton onClick={handleUpdateQuestion}>
-          {`${item.disabled ? "Edit" : "Submit"}`}
-        </SubmitButton>
-        <CancelButton onClick={() => onCancelQuestion(currentQuestion)}>
-          Cancel
-        </CancelButton>
-      </ActionButtonContainer>
     </>
   );
 };

@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { CheckboxContainer } from "../CheckboxGroup/Checkbox.styled";
+import { RadioItem } from "./RadioGroup.styled";
 
 interface CheckboxEntity {
   key: string;
@@ -10,14 +10,14 @@ interface CheckboxProps {
   item: CheckboxEntity;
   handleChange: (e: React.ChangeEvent<HTMLElement>) => void;
   isActive: boolean;
-  disabled: boolean;
+  // disabled: boolean;
 }
-const Checkbox: FC<CheckboxProps> = ({ item, handleChange, isActive, disabled }) => {
+const Checkbox: FC<CheckboxProps> = ({ item, handleChange, isActive }) => {
   return (
-    <CheckboxContainer>
+    <RadioItem>
       <input
         type="radio"
-        disabled={disabled}
+        // disabled={disabled}
         id={item.key}
         value={item.key}
         name={item.text}
@@ -25,7 +25,7 @@ const Checkbox: FC<CheckboxProps> = ({ item, handleChange, isActive, disabled })
         onChange={handleChange}
       />
       <label htmlFor={item.key}>{item.text}</label>
-    </CheckboxContainer>
+    </RadioItem>
   );
 };
 

@@ -13,6 +13,11 @@ export interface EnabledProps {
   [key: string]: string;
 }
 
+export interface TabContentProps {
+  title: string;
+  fields: QuestionnaireProps[];
+}
+
 export interface QuestionnaireProps {
   id: string;
   title: string;
@@ -23,11 +28,6 @@ export interface QuestionnaireProps {
   value: string | any;
   initialValue: any;
   placeholder?: string;
-  error?: string;
-  label?: string;
-  isExpanded: boolean;
-  isAnswerGiven: boolean;
-  disabled: boolean;
-  isChecked: boolean;
   enabled: boolean | EnabledProps[];
+  content: TabContentProps;
 }
